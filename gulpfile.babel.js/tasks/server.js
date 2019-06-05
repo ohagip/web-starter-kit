@@ -41,9 +41,8 @@ export function browserSync () {
 
 
 export function server () {
-	// console.log(serverConfig);
 	if (serverConfig.connectPhp.isUse) {
-		return $connectPhp.server(serverConfig.connectPhp.options, () => {
+		return $connectPhp.server(serverConfig.connectPhp.options, (a) => {
 			if (serverConfig.browserSync.isUse) {
 				browserSync();
 			}
