@@ -32,22 +32,23 @@ config.webpack = {
 // server
 config.server = {
 	browserSync: {
-		isUse: true, // browserSync 有無
+		isUse: false, // browserSync 有無
+		livereload: false,
 		watchFiles: [
 			`${config.dest}**/*.htm`,
 			`${config.dest}assets/css/**/*.css`
 		],
 		options: {
-			server:{
-				baseDir: config.dest
-			}
-			// proxy: "127.0.0.1:3001"
+			// server:{
+			// 	baseDir: config.dest
+			// }
+			proxy: "127.0.0.1:3001"
 		}
 	},
 	connectPhp: {
-		isUse: false, // connectPhp 有無
+		isUse: true, // connectPhp 有無
 		options: {
-			base: "dest/",
+			base: config.dest,
 			port: 3001
 		}
 	}
