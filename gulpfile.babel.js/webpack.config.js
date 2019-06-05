@@ -6,7 +6,7 @@ const config = require("./gulp.config.js");
 const ConcatPlugin = require("webpack-concat-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
-const src = `${__dirname}/src/js/`;
+const src = `${__dirname}/../src/js/`;
 
 /**
  * example: entriesフォルダ内のファイルがエントリーポイント対象の場合
