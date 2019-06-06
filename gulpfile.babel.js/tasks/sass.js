@@ -8,13 +8,13 @@ import $plumber from "gulp-plumber";
 import $sass from "gulp-sass";
 import $autoprefixer from "gulp-autoprefixer";
 
+// $sass.compiler = $nodeSass;
 
 let sassConfig = Object.assign({
 	src: "src/sass/**/*.scss",
 	dest: "htdocs/assets/css/",
 	sass: {
-		outputStyle: "expanded",
-		errLogToConsole: true
+		outputStyle: "expanded"
 	},
 	autoprefixer: {
 		browsers: ["last 2 versions"],
@@ -35,7 +35,7 @@ export function sass (){
 export function sassBuild() {
 	return src(sassConfig.src)
 		.pipe($plumber())
-		.pipe($sass(sassConfig.sass))
+		.pipe($sass(sassConfig.sass).on("error", $sass.logError))
 		.pipe($autoprefixer(sassConfig.autoprefixer))
 		.pipe(dest(sassConfig.dest));
 }

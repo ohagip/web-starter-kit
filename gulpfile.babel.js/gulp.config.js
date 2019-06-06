@@ -14,8 +14,7 @@ config.sass = {
 	src: `${config.src}sass/**/*.scss`,
 	dest: `${config.dest}assets/css/`,
 	sass: {
-		outputStyle: config.isProduction ? "compressed" : "expanded",
-		errLogToConsole: true
+		outputStyle: config.isProduction ? "compressed" : "expanded"
 	},
 	autoprefixer: {
 		browsers: ["last 2 versions", "Android >= 4.4"],
