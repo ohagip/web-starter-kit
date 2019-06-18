@@ -2,15 +2,16 @@
  * sass v1.0.0
  * 2019-06-04
  */
-import config from "../gulp.config.js";
+import config from "../config.js";
+import _ from "lodash";
 import { src, dest, watch } from "gulp";
 import $plumber from "gulp-plumber";
 import $sass from "gulp-sass";
 import $autoprefixer from "gulp-autoprefixer";
 
-// $sass.compiler = $nodeSass;
 
-let sassConfig = Object.assign({
+
+let sassConfig = _.merge({
 	src: "src/sass/**/*.scss",
 	dest: "htdocs/assets/css/",
 	sass: {

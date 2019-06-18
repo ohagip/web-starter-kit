@@ -2,16 +2,19 @@
  * webpack v1.0.0
  * 2019-06-04
  */
-import config from "../gulp.config.js";
+import config from "../config.js";
+import _ from "lodash";
 import { src, dest, watch } from"gulp";
 import $plumber from"gulp-plumber";
 import $webpackStream from"webpack-stream";
 
 
-let webpackConfig = Object.assign({
+let webpackConfig = _.merge({
 	src: "./src/js/**/*.js",
 	dest: "./htdocs/assets/js/",
-	webpackConfig: require("../webpack.config")
+	config: {
+		// see: https://webpack.js.org/concepts/
+	}
 }, config.webpack);
 
 
@@ -27,7 +30,7 @@ export function webpack () {
 export function webpackBuild() {
 	return src(webpackConfig.src)
 		.pipe($plumber())
-		.pipe($webpackStream(webpackConfig.webpackConfig))
+		.pipe($webpackStream(webpackConfig.config))
 		.on("error", (error) => console.log(error))
 		.pipe(dest(webpackConfig.dest));
 }

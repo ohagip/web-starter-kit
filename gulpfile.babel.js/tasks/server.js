@@ -1,42 +1,56 @@
 /**
  * server v1.0.0
- * 2019-06-04
+ * 2019-06-17
  */
-import config from "../gulp.config.js";
+import config from "../config.js";
+import _ from "lodash";
 import { watch } from "gulp";
 import $connectPhp from "gulp-connect-php";
 import $browserSync from "browser-sync";
+import proxyMiddleware from "http-proxy-middleware";
 
 
-let serverConfig = Object.assign({
+let serverConfig = _.merge({
 	browserSync: {
 		isUse: true, // browserSync 有無
+		liveReload: true,
 		watchFiles: [
-			"dest/"
+			// `${config.dest}**/*.html`,
+			// `${config.dest}**/*.php`,
+			// `${config.dest}assets/js/**/*.js`,
+			// `${config.dest}assets/css/**/*.css`
 		],
+		apiServer: null,
 		options: {
-			// server:{
-			// 	baseDir: "htdocs/"
-			// }
-			proxy: "127.0.0.1:3001" // connectPhp使用時
+			server: {
+				baseDir: config.dest
+			},
+			middleware: null
 		}
 	},
 	connectPhp: {
 		isUse: false, // connectPhp 有無
-		options: {
-			base: "dest/",
-			port: 3001,
-		}
+		// see: https://www.npmjs.com/package/gulp-connect-php
+		options: null
 	}
 }, config.server);
 
 
 export function browserSync () {
-	watch(serverConfig.browserSync.watchFiles)
-		.on("change", () => {
-			$browserSync.reload();
-		});
-	return $browserSync(serverConfig.browserSync.options);
+	if (serverConfig.browserSync.liveReload) {
+		watch(serverConfig.browserSync.watchFiles)
+			.on("change", () => {
+					$browserSync.reload();
+			});
+	}
+
+	if (serverConfig.browserSync.apiServer){
+		serverConfig.browserSync.options.middleware = serverConfig.browserSync.options.middleware || [];
+
+		proxyMiddleware(serverConfig.browserSync.apiServer.context, serverConfig.browserSync.apiServer.options);
+	}
+
+	return $browserSync.init(serverConfig.browserSync.options);
 }
 
 

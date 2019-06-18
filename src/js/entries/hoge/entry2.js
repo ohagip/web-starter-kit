@@ -14,9 +14,10 @@
 
 
 // app-es
-import Base from './hoge/Base';
-import Child from './hoge/Child';
-import * as utils from './utils/utils';
+import Base from '../../common/hoge/Base';
+import Child from '../../common/hoge/Child';
+import * as utils from '../../common/utils/utils';
+
 
 
 // import glsl from "glslify";
