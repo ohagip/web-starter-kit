@@ -15,14 +15,12 @@
 
 
 ## その他
-基本的なタスクは完了。
-ガイドラインに合わせて今後、追加、編集などのアップデート予定。
-・初期テンプレートHTMLの設置。
-・初期scssファイル、reset.scss, config.scss(初期変数), mixin.scss etc...
-・公開、開発コード置き場、htdocs（公開）、src（開発）コードディレクトリ構成。
-・gitignore
-・README.md
-
+基本的なタスクは完了。ガイドラインに合わせて今後、追加、編集などのアップデート予定。
+- 公開、開発コード置き場、htdocs（公開）、src（開発）コードディレクトリ構成。
+- 初期テンプレートHTMLの設置。
+- 初期scssファイル、reset.scss, config.scss(初期変数), mixin.scss etc...
+- gitignore
+- README.md
 
 
 <br>
