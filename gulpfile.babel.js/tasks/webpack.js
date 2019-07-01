@@ -25,7 +25,7 @@ export function webpack () {
 		return watch(webpackConfig.src, webpackBuild);
 	}
 }
-console.log(webpackConfig);
+
 
 export function webpackBuild() {
 	return src(webpackConfig.src)

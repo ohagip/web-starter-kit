@@ -1,6 +1,6 @@
 /**
  * config.js v1.0.0
- * 2019-06-17
+ * 2019-07-01
  */
 import _ from "lodash";
 
@@ -14,7 +14,6 @@ let config = {
 	dest: "./htdocs/",
 }
 
-console.log(config);
 
 // tmpData :テンプレートデータ
 config.tmpData = {
@@ -43,31 +42,31 @@ import ConcatPlugin from "webpack-concat-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
-
 // エントリーポイント複数ある場合
 // 以下サンプルコードの、引数は初期値なので引数なしと同じです。
-// import createEntries from "./tasks/createEntries";
+import createEntries from "./tasks/createEntries";
 // const entries = createEntries();
+
 // const entries = createEntries(`**/*.js`, {
-// 	cwd: "./src/js/entries/" // 検索対象ディレクトリ
+// 	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
 // }, function(fileName, fullpath){
 // 	let data = {};
 // 		data[fileName] = fullpath;
 // 	return data;
 // });
-// console.log(entries);
-// console.log(config);
+
 config.webpack = {
 	src: [
-		`${config.src}js/**/*.js`,
+		`${config.src}assets/js/**/*.js`,
 		`${config.src}html/**/*.html`
 	],
 	dest: `${config.dest}assets/js/`,
 	config: {
 		mode: config.isDev ? "development" : "production",
 		entry: {
-			"common.js": `${config.src}js/common/index.js`
+			"common.js": `${config.src}assets/js/common/index.js`
 		},
+		// entryポイントが複数の場合
 		// entry: entries,
 		output: {
 			filename: "[name]"
@@ -106,9 +105,9 @@ config.webpack = {
 					// npm
 					// "./node_modules/jquery/dist/jquery.min.js",
 					// "./node_modules/velocity-animate/velocity.min.js",
-					// libs folder
-					`${config.src}js/libs/core/**/*.js`,
-					`${config.src}js/libs/plugins/**/*.js`
+					// libs
+					`${config.src}assets/js/libs/core/**/*.js`,
+					`${config.src}assets/js/libs/plugins/**/*.js`
 				],
 				attributes: {
 					async: false
@@ -116,13 +115,13 @@ config.webpack = {
 			}),
 
 			// og, pathなどの書き換えが必要な場合
-			new HtmlWebpackPlugin(
-				_.merge({
-					inject: false, // jsを自動挿入するか
-					filename: `../../sample.html`, // 書き出し先（エントリーポイント基準）
-					template: `${config.src}html/sample.html`
-				}, config.tmpData[config.mode])
-			)
+			// new HtmlWebpackPlugin(
+			// 	_.merge({
+			// 		inject: false, // jsを自動挿入するか
+			// 		filename: `../../sample.html`, // 書き出し先（エントリーポイント基準）
+			// 		template: `${config.src}html/sample.html`
+			// 	}, config.tmpData[config.mode])
+			// )
 		],
 		optimization: {
 			minimizer: [
@@ -144,7 +143,7 @@ config.webpack = {
 
 // sass: sassコンパイル
 config.sass = {
-	src: `${config.src}sass/**/*.scss`,
+	src: `${config.src}assets/sass/**/*.scss`,
 	dest: `${config.dest}assets/css/`,
 	sass: {
 		outputStyle: config.isDev ? "expanded" : "compressed"

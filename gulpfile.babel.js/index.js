@@ -1,8 +1,7 @@
 /**
  * gulpfile v1.0.0
- * 2019-06-24
+ * 2019-07-01
  */
-// import config from "./config.js";
 import { parallel, series } from "gulp";
 import { clean } from "./tasks/clean";
 import { sass, sassBuild } from "./tasks/sass";
@@ -33,16 +32,3 @@ export const prd = series(clean, parallel(sassBuild, webpackBuild));
  * command: npm run srv or gulp srv
  */
 export const srv = parallel(server);
-
-
-/**
- * make htdocs directories
- * command: npm run mkhtdocs or gulp mkhtdocs
- */
-/*
-import { gitClone } from "./tasks/gitClone";
-export const mkhtdocs = task("mkhtdocs", (done) => {
-	gitClone("https://github.com/1-10/1906_id_programming-style.git", "_htdocs");
-	done();
-});
-*/
