@@ -2,29 +2,47 @@
  * config.js v1.0.0
  * 2019-06-17
  */
+import _ from "lodash";
+
 let config = {
+	isDev: process.argv[2] == void 0,
+	isStg: process.argv[2] == "stg",
+	isPrd: process.argv[2] == "prd",
+	mode: process.argv[2] || "dev",
 	args: process.argv.slice(2),
-	isProduction: process.argv[2] == "prod",
 	src: "./src/",
 	dest: "./htdocs/",
 }
 
-// sass: sassコンパイル
-config.sass = {
-	src: `${config.src}sass/**/*.scss`,
-	dest: `${config.dest}assets/css/`,
-	sass: {
-		outputStyle: config.isProduction ? "compressed" : "expanded"
+console.log(config);
+
+// tmpData :テンプレートデータ
+config.tmpData = {
+	dev: {
+		title: "開発版",
+		path: ".",
+		ogurl: "http://1-10.dev"
 	},
-	autoprefixer: {
-		browsers: ["last 2 versions", "Android >= 4.4"],
-		add: true
+
+	stg: {
+		title: "ステージング版",
+		path: "http://1-10.stg",
+		ogurl: "http://1-10.stg"
+	},
+
+	prd: {
+		title: "製品版",
+		path: "http://1-10.prd",
+		ogurl: "http://1-10.prd"
 	}
 }
+
 
 // webpack: webpackでのjsコンパイル
 import ConcatPlugin from "webpack-concat-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
 
 // エントリーポイント複数ある場合
 // 以下サンプルコードの、引数は初期値なので引数なしと同じです。
@@ -38,12 +56,15 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 // 	return data;
 // });
 // console.log(entries);
-
+// console.log(config);
 config.webpack = {
-	src: `${config.src}js/**/*.js`,
+	src: [
+		`${config.src}js/**/*.js`,
+		`${config.src}html/**/*.html`
+	],
 	dest: `${config.dest}assets/js/`,
 	config: {
-		mode: config.isProduction ? "production" : "development",
+		mode: config.isDev ? "development" : "production",
 		entry: {
 			"common.js": `${config.src}js/common/index.js`
 		},
@@ -72,6 +93,7 @@ config.webpack = {
 			]
 		},
 		devtool: "source-map",
+
 		plugins: [
 			// ファイル連結
 			new ConcatPlugin({
@@ -91,7 +113,16 @@ config.webpack = {
 				attributes: {
 					async: false
 				}
-			})
+			}),
+
+			// og, pathなどの書き換えが必要な場合
+			new HtmlWebpackPlugin(
+				_.merge({
+					inject: false, // jsを自動挿入するか
+					filename: `../../sample.html`, // 書き出し先（エントリーポイント基準）
+					template: `${config.src}html/sample.html`
+				}, config.tmpData[config.mode])
+			)
 		],
 		optimization: {
 			minimizer: [
@@ -107,6 +138,20 @@ config.webpack = {
 				})
 			]
 		}
+	}
+}
+
+
+// sass: sassコンパイル
+config.sass = {
+	src: `${config.src}sass/**/*.scss`,
+	dest: `${config.dest}assets/css/`,
+	sass: {
+		outputStyle: config.isDev ? "expanded" : "compressed"
+	},
+	autoprefixer: {
+		browsers: ["last 2 versions", "Android >= 4.4"],
+		add: true
 	}
 }
 

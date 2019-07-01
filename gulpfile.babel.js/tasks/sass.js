@@ -25,7 +25,7 @@ let sassConfig = _.merge({
 
 
 export function sass (){
-	if (config.isProduction){
+	if (config.isPrd){
 		return sassBuild();
 	} else {
 		return watch(sassConfig.src, sassBuild);

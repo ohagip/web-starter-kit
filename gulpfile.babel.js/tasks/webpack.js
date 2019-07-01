@@ -19,13 +19,13 @@ let webpackConfig = _.merge({
 
 
 export function webpack () {
-	if (config.isProduction){
+	if (config.isPrd){
 		return webpackBuild();
 	} else {
 		return watch(webpackConfig.src, webpackBuild);
 	}
 }
-
+console.log(webpackConfig);
 
 export function webpackBuild() {
 	return src(webpackConfig.src)

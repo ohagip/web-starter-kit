@@ -2,30 +2,27 @@
 
 ---
 
-# α ver.2
+# α ver.3
 
-## 残タスク
-### <strong style="color:#3D978D">次回までに個々にアイデアまとめてください。</strong>
+## 残タスク対応
+
+- 基本的なコマンド名とタスク内容を決める。
+<br>　→ 対応済みREADME.mdコマンド追記済み
+
 
 - ローカル、ステージング、公開時に、og, 画像パス情報が切り替え・変更が必要な案件の場合どうするか？エンプレートエンジンを使うか？
-<br>　→ 例）EJS, Handlebars, html-webpack-plugin etc...
-- 基本的なコマンド名とタスク内容を決める。
-<br>　→ コマンド例) 開発: dev, ステージング: stg, プロダクト: prod
-- コマンドは、package.jsonで管理し、README.mdにコマンド内容を記載する。
-<br>　→ コマンドが決まり次第反映 (仮で追加：npm run dev, npm run prod)
+<br>　→ 最小単位としてhtml-webpack-pluginで対応。大規模は向かないので、その際は、別のテンプレートエンジンで対応。
 
 
-## 対応済
-- jsの圧縮うまくできていないので確認する
-<br>　→ 解決済み
-- sassのコンパイルエラーの確認
-<br>　→ インストールコマンド問題で解決
-- webpack.config.jsonは、gulp.configに統合
-<br>　→ config.jsonにファイル名も変更
-- 開発用ビルドではソースマップを追加する
-<br>　→ 対応済み
-- webpackサーバーを導入する。
-<br>　→ browserSync設定で行けるので導入見送り
+## その他
+基本的なタスクは完了。
+ガイドラインに合わせて今後、追加、編集などのアップデート予定。
+・初期テンプレートHTMLの設置。
+・初期scssファイル、reset.scss, config.scss(初期変数), mixin.scss etc...
+・公開、開発コード置き場、htdocs（公開）、src（開発）コードディレクトリ構成。
+・gitignore
+・README.md
+
 
 
 <br>
@@ -69,25 +66,40 @@ web-starter-kit/
 npm ci
 ```
 
+<!--
 #### htdocsフォルダ一式生成
  <a href="https://github.com/1-10/1906_id_programming-style" target="_blank">1-10/1906_id_programming-style</a>のフォルダ構成一式ダウンロードします。※必要な時のみ使用。
 ```
 npm run mkhtdocs
 ```
+-->
 
-#### 開発
-コマンドの説明
+#### 開発版
+ローカルサーバー起動、ソース非圧縮、SourceMap生成（※案件別に設定）<br>
+起動時、ソースのコンパイルは行いません。
 ```
 npm run dev
 ```
 
-#### プロダクト
-コマンドの説明
+#### ステージング版
+ローカルサーバー起動、ソース圧縮、SourceMap削除、console削除（※案件別に設定）
 ```
-npm run prod
+npm run stg
 ```
 
-#### xxxコマンド名
+#### プロダクト版
+ソース圧縮、SourceMap削除、console削除
+```
+npm run prd
+```
+
+#### サーバー起動
+サーバー起動のみ
+```
+npm run srv
+```
+
+#### コマンド追記例: コマンド名
 コマンドの説明
 ```
 npm run xxx
@@ -98,8 +110,36 @@ npm run xxx
 ---
 ---
 
+
 # Log
 
+# α ver.2
+2019-6-24
+
+## 残タスク
+### <strong style="color:#3D978D">次回までに個々にアイデアまとめてください。</strong>
+
+- ローカル、ステージング、公開時に、og, 画像パス情報が切り替え・変更が必要な案件の場合どうするか？エンプレートエンジンを使うか？
+<br>　→ 例）EJS, Handlebars, html-webpack-plugin etc...
+- 基本的なコマンド名とタスク内容を決める。
+<br>　→ コマンド例) 開発: dev, ステージング: stg, プロダクト: prod
+- コマンドは、package.jsonで管理し、README.mdにコマンド内容を記載する。
+<br>　→ コマンドが決まり次第反映 (仮で追加：npm run dev, npm run prod)
+
+
+## 対応済
+- jsの圧縮うまくできていないので確認する
+<br>　→ 解決済み
+- sassのコンパイルエラーの確認
+<br>　→ インストールコマンド問題で解決
+- webpack.config.jsonは、gulp.configに統合
+<br>　→ config.jsonにファイル名も変更
+- 開発用ビルドではソースマップを追加する
+<br>　→ 対応済み
+- webpackサーバーを導入する。
+<br>　→ browserSync設定で行けるので導入見送り
+
+---
 
 # α ver.1
 2019-6-17
