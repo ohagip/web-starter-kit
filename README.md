@@ -24,11 +24,11 @@ web-starter-kit/
 │   └ task files...
 │
 ├ htdocs/ [公開コード]
-├ src/ [開発コード] ※src配下はhtdocsとフォルダ構成を揃える
+├ src/ [開発コード]
 ├ .gitignore (仮)
 ├ package-look.json
 ├ package.json
-└ README.md (仮)
+└ README.md
 ```
 
 ### コマンドリスト
