@@ -1,5 +1,59 @@
+@charset "utf-8";
+
 @import "_common/config";
 @import "_common/function";
 @import "_common/mixin";
 @import "_common/keyframe";
 @import "_common/reset";
+
+
+// -----------------------------------------------------------------
+// base
+// -----------------------------------------------------------------
+body {
+	// position: relative;
+	// font-family: $baseFont;
+	// color: $black;
+}
+a {
+	text-decoration: underline;
+	// transition: all 400ms;
+	// -webkit-tap-highlight-color: rgba($blue, 0.4);
+	&:hover	{ text-decoration:none; }
+}
+
+
+// -----------------------------------------------------------------
+// レスポンシブ（PCファースト仕様）
+// -----------------------------------------------------------------
+// PC
+.element {
+}
+// TB
+@media screen and (max-width: $TB) {
+  .element {
+  }
+}
+// SP
+@media screen and (max-width: $SP) {
+  .element {
+  }
+}
+
+
+// -----------------------------------------------------------------
+// レスポンシブ（SPファースト仕様）
+// -----------------------------------------------------------------
+// SP
+.element {
+}
+// TB
+@media screen and (min-width: $TB) {
+  .element {
+  }
+}
+// PC
+@media screen and (min-width: $PC) {
+  .element {
+  }
+}
