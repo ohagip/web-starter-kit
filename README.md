@@ -40,13 +40,14 @@ npm ci
 
 #### 開発版
 ローカルサーバー起動、ファイル監視(Watch), ソース非圧縮、JS SourceMap生成<br>
-起動時、ソースのコンパイルは行いません。（※案件別に必要に応じて設定変更してください）
+~~起動時、ソースのコンパイルは行いません。~~ （※案件別に必要に応じて設定変更してください）<br>
+起動時、ソースのコンパイルを行います。
 ```
 npm run dev
 ```
 
 #### ステージング版
-ローカルサーバー起動、ソース圧縮、SourceMap削除、console削除（※案件別に必要に応じて設定変更してください）
+~~ローカルサーバー起動、~~ ソース圧縮、SourceMap削除、console削除（※案件別に必要に応じて設定変更してください）
 ```
 npm run stg
 ```
@@ -68,3 +69,18 @@ npm run srv
 ```
 npm run xxx
 ```
+
+---
+## 変更ログ
+- `.gitignore` に `.idea` を追加
+- 開発版・ステージング版のtask変更
+- `webpack` の `entry` を複数に変更
+- `npm` で `jquery` をインストールし `libs.js` へ追加
+- `sass` のベースファイル追加
+- `html` のビルドを `ejs` に変更
+- `ejs` のベースファイルを追加
+- `config.tmpData` を変更
+- `config.tmpData` をJSへ渡すよう調整
+- `config.clean` を変更
+- `gulp-autoprefixer` から `gulp-postcss` `autoprefixer` に変更
+- `gulp-postcss` に `css-mqpacker` を追加

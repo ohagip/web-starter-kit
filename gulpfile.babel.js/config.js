@@ -18,21 +18,18 @@ let config = {
 // tmpData :テンプレートデータ
 config.tmpData = {
 	dev: {
-		title: "開発版",
-		path: ".",
-		ogurl: "http://1-10.dev"
+		path: "/",
+		url: "http://1-10.dev"
 	},
 
 	stg: {
-		title: "ステージング版",
-		path: "http://1-10.stg",
-		ogurl: "http://1-10.stg"
+		path: "/",
+		url: "http://1-10.stg"
 	},
 
 	prd: {
-		title: "製品版",
-		path: "http://1-10.prd",
-		ogurl: "http://1-10.prd"
+		path: "/",
+		url: "http://1-10.prd"
 	}
 }
 
@@ -41,11 +38,15 @@ config.tmpData = {
 import ConcatPlugin from "webpack-concat-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import { DefinePlugin } from "webpack";
 
 // エントリーポイント複数ある場合
 // 以下サンプルコードの、引数は初期値なので引数なしと同じです。
 import createEntries from "./tasks/createEntries";
-// const entries = createEntries();
+const entries = createEntries(`**/*.js`, {
+	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
+});
+entries["common.js"] = `${config.src}assets/js/common/index.js`;
 
 // const entries = createEntries(`**/*.js`, {
 // 	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
@@ -58,16 +59,16 @@ import createEntries from "./tasks/createEntries";
 config.webpack = {
 	src: [
 		`${config.src}assets/js/**/*.js`,
-		`${config.src}html/**/*.html`
+		// `${config.src}html/**/*.html`
 	],
 	dest: `${config.dest}assets/js/`,
 	config: {
 		mode: config.isDev ? "development" : "production",
-		entry: {
-			"common.js": `${config.src}assets/js/common/index.js`
-		},
+		// entry: {
+		// 	"common.js": `${config.src}assets/js/common/index.js`
+		// },
 		// entryポイントが複数の場合
-		// entry: entries,
+		entry: entries,
 		output: {
 			filename: "[name]"
 		},
@@ -103,7 +104,7 @@ config.webpack = {
 				fileName: "[name].js",
 				filesToConcat: [
 					// npm
-					// "./node_modules/jquery/dist/jquery.min.js",
+					"./node_modules/jquery/dist/jquery.min.js",
 					// "./node_modules/velocity-animate/velocity.min.js",
 					// libs
 					`${config.src}assets/js/libs/core/**/*.js`,
@@ -112,6 +113,11 @@ config.webpack = {
 				attributes: {
 					async: false
 				}
+			}),
+
+			new DefinePlugin({
+				APP_CONFIG: JSON.stringify(config.tmpData[config.mode]),
+				APP_ENV: JSON.stringify(config.mode),
 			}),
 
 			// og, pathなどの書き換えが必要な場合
@@ -149,16 +155,20 @@ config.sass = {
 		outputStyle: config.isDev ? "expanded" : "compressed"
 	},
 	autoprefixer: {
-		browsers: ["last 2 versions", "Android >= 4.4"],
+    overrideBrowserslist: ["last 2 versions", "Android >= 4.4"],
 		add: true
-	}
+	},
+  cssMqpacker: {}
 }
 
 
 // clean: ファイル削除
 config.clean = {
 	files: [
-		`${config.dest}assets/js/**/*.map`
+		`${config.dest}assets/js/**/*`,
+		`${config.dest}assets/css/**/*`,
+		`${config.dest}**/*.html`,
+		`${config.dest}**/*.ejs`,
 	]
 }
 
@@ -185,5 +195,14 @@ config.server = {
 		isUse: true, // connectPhp 有無
 	}
 }
+
+// ejs
+config.ejs = {
+	watch: `${config.src}**/*.ejs`,
+	src: `${config.src}**/!(_)*.ejs`,
+	dest: `${config.dest}`,
+	options: {}
+}
+
 
 export default config;

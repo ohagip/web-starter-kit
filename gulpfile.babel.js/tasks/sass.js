@@ -7,7 +7,9 @@ import _ from "lodash";
 import { src, dest, watch } from "gulp";
 import $plumber from "gulp-plumber";
 import $sass from "gulp-sass";
-import $autoprefixer from "gulp-autoprefixer";
+import autoprefixer from 'autoprefixer';
+import cssMqpacker from 'css-mqpacker';
+import $postcss from "gulp-postcss";
 
 
 
@@ -18,9 +20,10 @@ let sassConfig = _.merge({
 		outputStyle: "expanded"
 	},
 	autoprefixer: {
-		browsers: ["last 2 versions"],
+    overrideBrowserslist: ["last 2 versions"],
 		add: true
-	}
+	},
+  cssMqpacker: {}
 }, config.sass);
 
 
@@ -37,6 +40,9 @@ export function sassBuild() {
 	return src(sassConfig.src)
 		.pipe($plumber())
 		.pipe($sass(sassConfig.sass).on("error", $sass.logError))
-		.pipe($autoprefixer(sassConfig.autoprefixer))
+		.pipe($postcss([
+			autoprefixer(sassConfig.autoprefixer),
+			cssMqpacker(sassConfig.cssMqpacker),
+    ]))
 		.pipe(dest(sassConfig.dest));
 }

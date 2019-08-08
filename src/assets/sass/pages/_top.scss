@@ -1,0 +1,24 @@
+/**
+ * Top page
+ */
+
+.page-top {
+  $imgPath: $IMG_PATH + 'top/';
+
+  // --------------------
+  // Test
+  // --------------------
+  .test {
+    @include mq-pc { content: 'pc'; }
+    @include mq-tab { content: 'tab'; }
+    @include mq-sp { content: 'sp'; }
+  }
+
+  .test-tab-gt {
+    @include mq-tab-gt { content: 'tab-gt'; }
+  }
+
+  .test-tab-lt {
+    @include mq-tab-lt { content: 'tab-lt'; }
+  }
+}
