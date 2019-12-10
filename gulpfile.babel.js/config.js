@@ -58,7 +58,7 @@ entries["common.js"] = `${config.src}assets/js/common/index.js`;
 
 config.webpack = {
 	src: [
-		`${config.src}assets/js/**/*.js`,
+		`${config.src}assets/js/**/!(_)*.js`,
 		// `${config.src}html/**/*.html`
 	],
 	dest: `${config.dest}assets/js/`,
