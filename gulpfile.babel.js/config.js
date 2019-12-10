@@ -181,7 +181,8 @@ config.server = {
 		watchFiles: [
 			`${config.dest}**/*.html`,
 			`${config.dest}**/*.php`,
-			`${config.dest}assets/css/**/*.css`
+			`${config.dest}assets/css/**/*.css`,
+			`${config.dest}assets/js/**/*.js`
 		],
 		// pro
 		// apiServer: {
@@ -190,6 +191,16 @@ config.server = {
 		// 		target: "http://www.example.org"
 		// 	}
 		// }
+		options: {
+			serveStatic: [
+				{
+					route: '/dummy',
+					dir: `${config.src}mock/assets/`,
+				},
+			],
+			ghostMode: false,
+			reloadDebounce: 500,
+		}
 	},
 	connectPhp: {
 		isUse: true, // connectPhp 有無
