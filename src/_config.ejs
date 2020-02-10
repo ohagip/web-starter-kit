@@ -11,20 +11,17 @@ JS_PATH       = ASSETS_PATH + 'js/';
 DUMMY_PATH    = CONSTANT.path + 'dummy/';
 
 // 全ページ共通
-site = {
-  title: 'title',
-  description: 'description',
-  keywords: 'keywords',
+site = {};
+site.title = 'title';
+site.description = 'description';
+site.keywords = 'keywords';
 
-  ogpUrl: CONSTANT.url,
-  ogpTitle: 'title',
-  ogpDescription: 'description',
-  ogpImage: `${CONSTANT.url}${CONSTANT.path}assets/images/common/ogp.png`,
-  ogpSiteName: 'sate name',
-  ogpType: 'article',
-  ogpLocale: 'ja_JP',
-  ogpAppID: '',
-
-  gaID: CONSTANT.gaID
-};
+site.ogpUrl = CONSTANT.url;
+site.ogpTitle = 'title';
+site.ogpDescription = 'description';
+site.ogpImage = `${CONSTANT.url}${CONSTANT.path}assets/images/common/ogp.png`;
+site.ogpSiteName = 'sate name';
+site.ogpType = 'article'; // website
+site.ogpLocale = 'ja_JP';
+site.ogpAppID = '';
 _%>
