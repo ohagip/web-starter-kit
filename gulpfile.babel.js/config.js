@@ -43,7 +43,7 @@ import { DefinePlugin } from "webpack";
 // エントリーポイント複数ある場合
 // 以下サンプルコードの、引数は初期値なので引数なしと同じです。
 import createEntries from "./tasks/createEntries";
-const entries = createEntries(`**/*.js`, {
+const entries = createEntries(`**/!(_)*.js`, {
 	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
 });
 entries["common.js"] = `${config.src}assets/js/common/index.js`;
@@ -58,7 +58,7 @@ entries["common.js"] = `${config.src}assets/js/common/index.js`;
 
 config.webpack = {
 	src: [
-		`${config.src}assets/js/**/!(_)*.js`,
+		`${config.src}assets/js/**/*.js`,
 		// `${config.src}html/**/*.html`
 	],
 	dest: `${config.dest}assets/js/`,
