@@ -80,11 +80,7 @@ config.webpack = {
 						loader: "babel-loader",
 						options: {
 							presets: [
-								["@babel/preset-env", {
-									targets: "last 2 versions, ie >= 11, Android >= 6"
-									// 必要な polyfill のみを import させたい場合、'usage'を指定する（必須）
-									// useBuiltIns: "usage"
-								}]
+								["@babel/preset-env", {}]
 							]
 						}
 					}],

@@ -1,26 +1,4 @@
 
-
-
-▼issues
-・promise/async/awaitコンパイル処理標準装備
-	追加しました
-
-・単体でgulp taskを実行できるようにしたい
-	下記コマンド追加
-	npm run sass
-	npm run webpack
-
-・sassのgulp taskが動かない
-	gulp-autoprefixer削除
-	→ autoprefixer, gulp-postcssに変更
-		package.jsonにbrowserslistを記述
-
-
-
-
-
-
-
 ▼予定
 ・Node.jsバージョンアップ v12.17.0(安定版) https://nodejs.org/en/
 ・npmコマンド推奨、gulpコマンド非推奨
