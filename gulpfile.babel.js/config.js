@@ -1,6 +1,6 @@
 /**
- * config.js v1.0.0
- * 2019-07-01
+ * config.js v1.1.0
+ * 2020-06-02
  */
 import _ from "lodash";
 
@@ -38,6 +38,7 @@ config.tmpData = {
 
 
 // webpack: webpackでのjsコンパイル
+import webpack from "webpack";
 import ConcatPlugin from "webpack-concat-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
@@ -80,7 +81,7 @@ config.webpack = {
 						options: {
 							presets: [
 								["@babel/preset-env", {
-									targets: "last 2 versions, ie >= 11, Android >= 4.4"
+									targets: "last 2 versions, ie >= 11, Android >= 6"
 									// 必要な polyfill のみを import させたい場合、'usage'を指定する（必須）
 									// useBuiltIns: "usage"
 								}]
@@ -113,7 +114,9 @@ config.webpack = {
 					async: false
 				}
 			}),
-
+      new webpack.ProvidePlugin({
+        Promise: "es6-promise",
+      }),
 			// og, pathなどの書き換えが必要な場合
 			// new HtmlWebpackPlugin(
 			// 	_.merge({
@@ -148,10 +151,7 @@ config.sass = {
 	sass: {
 		outputStyle: config.isDev ? "expanded" : "compressed"
 	},
-	autoprefixer: {
-		browsers: ["last 2 versions", "Android >= 4.4"],
-		add: true
-	}
+	autoprefixer: {}
 }
 
 

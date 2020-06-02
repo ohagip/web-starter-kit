@@ -18,7 +18,7 @@ let webpackConfig = _.merge({
 }, config.webpack);
 
 
-export function webpack () {
+export function runWebpack () {
 	if (config.isPrd){
 		return webpackBuild();
 	} else {
