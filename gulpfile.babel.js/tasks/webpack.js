@@ -18,16 +18,12 @@ let webpackConfig = _.merge({
 }, config.webpack);
 
 
-export function runWebpack () {
-	if (config.isPrd){
-		return webpackBuild();
-	} else {
-		return watch(webpackConfig.src, webpackBuild);
-	}
+export function watchWebpack () {
+	return watch(webpackConfig.src, buildWebpack);
 }
 
 
-export function webpackBuild() {
+export function buildWebpack() {
 	return src(webpackConfig.src)
 		.pipe($plumber())
 		.pipe($webpackStream(webpackConfig.config))

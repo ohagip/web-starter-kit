@@ -168,4 +168,18 @@ config.server = {
 	}
 }
 
+// ejs
+config.ejs = {
+	src: `${config.src}**/*.ejs`,
+	dest: `${config.dest}`,
+	exclude: `!${config.src}**/_*.ejs`,
+	ejs: {
+		data: {
+      head: {
+        title: "Site Title"
+      }
+		}
+	}
+}
+
 export default config;

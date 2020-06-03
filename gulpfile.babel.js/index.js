@@ -4,48 +4,58 @@
  */
 import { parallel, series } from "gulp";
 import { clean } from "./tasks/clean";
-import { runSass, sassBuild } from "./tasks/sass";
-import { runWebpack, webpackBuild } from "./tasks/webpack";
+import { watchSass, buildSass } from "./tasks/sass";
+import { watchWebpack, buildWebpack } from "./tasks/webpack";
+import { watchEjs, buildEjs } from "./tasks/ejs";
 import { server } from "./tasks/server";
 
 
 /**
- * develop mode
+ * development mode
  * command: npm run dev or gulp
  */
-export default parallel(server, runSass, runWebpack);
+export default parallel(server, watchSass, watchWebpack);
 
 /**
  * staging mode
  * command: npm run stg or gulp stg
  */
-export const stg = series(clean, parallel(server, sassBuild, webpackBuild));
+export const stg = series(clean, parallel(server, buildSass, buildWebpack));
 
 /**
  * production mode
  * command: npm run prd or gulp prd
  */
-export const prd = series(clean, parallel(sassBuild, webpackBuild));
+export const prd = series(clean, parallel(buildSass, buildWebpack));
 
 /**
- * webpack
+ * webpack: webpackコンパイル
  * command: npm run webpack or gulp webpack
  */
-export const webpack = parallel(runWebpack);
+export const webpack = parallel(buildWebpack);
 
 /**
- * sass
+ * sass: sassコンパイル
  * command: npm run sass or gulp sass
  */
-export const sass = parallel(runSass);
+export const sass = parallel(buildSass);
 
 /**
- * server
+ * dist: dist(指定)フォルダに、コンパイルファイル出力
+ * ※htdocsに書き出しを行わない
+ * command: npm run dist or gulp dist
+ */
+export const dist = parallel(buildSass, buildWebpack);
+
+/**
+ * server: ローカルサーバー起動
  * command: npm run srv or gulp srv
  */
 export const srv = parallel(server);
 
 
-
-
-export const dist = parallel(sassBuild, webpackBuild);
+/**
+ * ejs: ejs
+ * command: npm run ejs or gulp srv
+ */
+// export const ejs = parallel(watchEjs);
