@@ -54,15 +54,15 @@ import TerserPlugin from "terser-webpack-plugin";
 
 config.webpack = {
 	src: [
-		path.join(__dirname, `../${config.src}assets/js/**/*.js`),
-		// path.join(__dirname, `../${config.src}html/**/*.html`)
+    `${config.src}assets/js/**/*.js`,
+		// `${config.src}html/**/*.html`
 	],
-	dest: path.join(__dirname, `../${config.dest}assets/js/`),
+	dest: `${config.dest}assets/js/`,
 	config: {
 		mode: config.isDev ? "development" : "production",
 		// entry: entries, // entryポイントが複数の場合
 		entry: {
-			"common.js": path.join(__dirname, `../${config.src}assets/js/common/index.js`)
+			"common.js": `${config.src}assets/js/common/index.js`
 		} ,
 		output: {
 			filename: "[name]"
@@ -85,6 +85,13 @@ config.webpack = {
 		},
 		devtool: "source-map",
 
+    resolve: {
+  		extensions: [".js"],
+      alias: {
+        "@js": path.resolve("./",  `${config.src}assets/js/`)
+      }
+    },
+
 		plugins: [
 			new ConcatPlugin({
 				uglify: false,
@@ -96,7 +103,7 @@ config.webpack = {
 					// npm
 					// "./node_modules/jquery/dist/jquery.min.js",
 					// libs
-					path.join(__dirname, `../${config.src}assets/js/libs/core/**/*.js`),
+					`${config.src}assets/js/libs/core/**/*.js`,
 				],
 				attributes: {
 					async: false
@@ -164,7 +171,7 @@ config.server = {
 		// }
 	},
 	connectPhp: {
-		isUse: true, // connectPhp 有無
+		isUse: false, // connectPhp 有無
 	}
 }
 

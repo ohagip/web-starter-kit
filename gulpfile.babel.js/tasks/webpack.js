@@ -24,6 +24,7 @@ export function watchWebpack () {
 
 
 export function buildWebpack() {
+  console.log("buildWebpack");
 	return src(webpackConfig.src)
 		.pipe($plumber())
 		.pipe($webpackStream(webpackConfig.config))

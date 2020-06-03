@@ -1,3 +1,6 @@
+import { hoge } from "@js/common/utils";
+
+
 console.log("common");
 
 
@@ -21,3 +24,5 @@ asyncFunction().then(function (value) {
 });
 
 console.log("OK");
+
+hoge();
