@@ -3,72 +3,67 @@
  * 2020-06-02
  */
 import _ from "lodash";
+import path from "path";
+import minimist from "minimist";
+
+console.log("===============================");
+const options = minimist(process.argv.slice(2));
+const mode = options.mode || "dev";
+
+console.log("===============================");
 
 let config = {
-	isDev: process.argv[2] == void 0,
-	isStg: process.argv[2] == "stg",
-	isPrd: process.argv[2] == "prd",
-	mode: process.argv[2] || "dev",
-	args: process.argv.slice(2),
+	isDev: mode == "dev",
+	mode: mode,
 	src: "./src/",
 	dest: "./htdocs/",
+  dist: "./dist/",
 }
 
-
-// tmpData :テンプレートデータ
-config.tmpData = {
-	dev: {
-		title: "開発版",
-		path: ".",
-		ogurl: "http://1-10.dev"
-	},
-
-	stg: {
-		title: "ステージング版",
-		path: "http://1-10.stg",
-		ogurl: "http://1-10.stg"
-	},
-
-	prd: {
-		title: "製品版",
-		path: "http://1-10.prd",
-		ogurl: "http://1-10.prd"
-	}
+if(options.dist){
+  config.dest = config.dist;
 }
+
+// htmlData: HtmlWebpackPluginデータ
+// config.htmlData = {
+// 	dev: {
+// 		title: "開発版",
+// 		path: ".",
+// 		ogurl: "http://1-10.dev"
+// 	},
+
+// 	stg: {
+// 		title: "ステージング版",
+// 		path: "http://1-10.stg",
+// 		ogurl: "http://1-10.stg"
+// 	},
+
+// 	prd: {
+// 		title: "製品版",
+// 		path: "http://1-10.prd",
+// 		ogurl: "http://1-10.prd"
+// 	}
+// }
 
 
 // webpack: webpackでのjsコンパイル
 import webpack from "webpack";
 import ConcatPlugin from "webpack-concat-plugin";
-import UglifyJSPlugin from "uglifyjs-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-
-// エントリーポイント複数ある場合
-// 以下サンプルコードの、引数は初期値なので引数なしと同じです。
-import createEntries from "./tasks/createEntries";
-// const entries = createEntries();
-
-// const entries = createEntries(`**/*.js`, {
-// 	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
-// }, function(fileName, fullpath){
-// 	let data = {};
-// 		data[fileName] = fullpath;
-// 	return data;
-// });
+import TerserPlugin from "terser-webpack-plugin";
+// import HtmlWebpackPlugin from "html-webpack-plugin";
 
 config.webpack = {
 	src: [
-		`${config.src}assets/js/**/*.js`,
-		`${config.src}html/**/*.html`
+		path.join(__dirname, `../${config.src}assets/js/**/*.js`),
+		// path.join(__dirname, `../${config.src}html/**/*.html`)
 	],
-	dest: `${config.dest}assets/js/`,
+	dest: path.join(__dirname, `../${config.dest}assets/js/`),
 	config: {
 		mode: config.isDev ? "development" : "production",
+		// entry: entries, // entryポイントが複数の場合
 		entry: {
-			"common.js": `${config.src}assets/js/common/index.js`
-		},
-		// entryポイントが複数の場合
-		// entry: entries,
+			"common.js": path.join(__dirname, `../${config.src}assets/js/common/index.js`)
+		} ,
 		output: {
 			filename: "[name]"
 		},
@@ -91,7 +86,6 @@ config.webpack = {
 		devtool: "source-map",
 
 		plugins: [
-			// ファイル連結
 			new ConcatPlugin({
 				uglify: false,
 				sourceMap: false,
@@ -101,10 +95,8 @@ config.webpack = {
 				filesToConcat: [
 					// npm
 					// "./node_modules/jquery/dist/jquery.min.js",
-					// "./node_modules/velocity-animate/velocity.min.js",
 					// libs
-					`${config.src}assets/js/libs/core/**/*.js`,
-					`${config.src}assets/js/libs/plugins/**/*.js`
+					path.join(__dirname, `../${config.src}assets/js/libs/core/**/*.js`),
 				],
 				attributes: {
 					async: false
@@ -119,22 +111,16 @@ config.webpack = {
 			// 		inject: false, // jsを自動挿入するか
 			// 		filename: `../../sample.html`, // 書き出し先（エントリーポイント基準）
 			// 		template: `${config.src}html/sample.html`
-			// 	}, config.tmpData[config.mode])
+			// 	}, config.htmlData[config.mode])
 			// )
 		],
 		optimization: {
-			minimizer: [
-				new UglifyJSPlugin({
-					uglifyOptions: {
-						output: {
-							comments: /^\**!|@preserve|@license|@cc_on/
-						},
-						compress: {
-							drop_console: true
-						}
-					}
-				})
-			]
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          extractComments: false,
+        })
+      ],
 		}
 	}
 }

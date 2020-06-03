@@ -19,3 +19,5 @@ asyncFunction().then(function (value) {
     // 非同期処理失敗。呼ばれない
     console.log(error);
 });
+
+console.log("OK");

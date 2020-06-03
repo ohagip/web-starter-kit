@@ -44,3 +44,8 @@ export const sass = parallel(runSass);
  * command: npm run srv or gulp srv
  */
 export const srv = parallel(server);
+
+
+
+
+export const dist = parallel(sassBuild, webpackBuild);

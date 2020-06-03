@@ -10,6 +10,17 @@ let _options = {
 	cwd: "./src/js/entries/"
 }
 
+// EXAPMLE
+// import createEntries from "./tasks/createEntries";
+// const entries = createEntries();
+// or
+// const entries = createEntries(`**/*.js`, {
+// 	cwd: "./src/assets/js/entries/" // 検索対象ディレクトリ
+// }, function(fileName, fullpath){
+// 	let data = {};
+// 		data[fileName] = fullpath;
+// 	return data;
+// });
 
 /**
  * createEntry webpackの複数エントリポイントの生成
