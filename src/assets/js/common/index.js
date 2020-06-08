@@ -3,6 +3,8 @@ import { hoge } from "@js/common/utils";
 
 console.log("common");
 
+$.ajax({url: "/$api/hoge"})
+
 
 function asyncFunction() {
 

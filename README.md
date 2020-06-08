@@ -2,7 +2,6 @@
 
 ---
 
-
 ## 開発環境
 
 ### バージョン
@@ -67,4 +66,46 @@ npm run srv
 コマンドの説明
 ```
 npm run xxx
+```
+
+
+---
+
+## レギュレーション
+
+### デスクトップ
+#### Windows
+```
+os: 10
+Browser: Edge, Chrome, FireFox [全て最新版]
+```
+#### Mac
+```
+os: 10.15以降
+Browser: Safari, Chrome, FireFox [全て最新版]
+```
+
+#### スマートフォン
+アプリ内ブラウザ(WebView)は、非対応。
+#### Android
+```
+os: Android 6以降
+Browser: Chrome[最新版]
+```
+#### iPhone
+```
+os: ios 12以降
+Browser: Safari [最新版]
+```
+
+#### タブレット
+#### Android
+```
+os: Android 6以降
+Browser: Chrome[最新版]
+```
+#### iPad
+```
+os: iPadOS 13以降
+Browser: Safari [最新版]
 ```

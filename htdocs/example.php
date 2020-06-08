@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-	<title>Site Title</title>
+	<title>サンプル</title>
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 
@@ -28,13 +28,7 @@
 
 
 <body>
-<header>
-	サンプルページ
-	ヘッダー
-</header>
-
-
-	<div>ここに本文が入ります。</div>
+	<?php echo "Hello world"; ?>
 	<!-- <script src="assets/js/libs.js"></script> -->
 	<!-- <script src="assets/js/common.js"></script> -->
 	<!-- <script src="assets/js/scripts.js"></script> -->

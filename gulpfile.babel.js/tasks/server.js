@@ -1,68 +1,80 @@
 /**
- * server v1.0.0
- * 2019-06-17
+ * server v1.0.1
+ * 2020-06-04
  */
 import config from "../config.js";
 import _ from "lodash";
 import { watch } from "gulp";
-import $connectPhp from "gulp-connect-php";
 import $browserSync from "browser-sync";
 import proxyMiddleware from "http-proxy-middleware";
+import $connectPhp from "gulp-connect-php";
+
+
+/**
+ * https://www.browsersync.io/
+ * https://github.com/chimurai/http-proxy-middleware
+ * https://github.com/micahblu/gulp-connect-php
+**/
 
 
 let serverConfig = _.merge({
+  watchFiles: [
+    `${config.dest}**/*.html`,
+    `${config.dest}**/*.php`,
+    `${config.dest}assets/css/**/*.css`
+  ],
 	browserSync: {
-		isUse: true, // browserSync 有無
-		liveReload: true,
-		watchFiles: [
-			// `${config.dest}**/*.html`,
-			// `${config.dest}**/*.php`,
-			// `${config.dest}assets/js/**/*.js`,
-			// `${config.dest}assets/css/**/*.css`
-		],
-		apiServer: null,
 		options: {
 			server: {
 				baseDir: config.dest
 			},
-			middleware: null
+			middleware: []
 		}
 	},
+	middlewareOptions: null, // proxyMiddleware
 	connectPhp: {
 		isUse: false, // connectPhp 有無
-		// see: https://www.npmjs.com/package/gulp-connect-php
-		options: null
+		options: {
+      port: 8000,
+      hostname: "127.0.0.1",
+      base: config.dest
+    }
 	}
 }, config.server);
 
+// proxy setting
+if(serverConfig.connectPhp.isUse){
+  serverConfig.browserSync.options.server = null;
+  serverConfig.browserSync.options.proxy = serverConfig.connectPhp.options.hostname + ":" + serverConfig.connectPhp.options.port
+}
+
 
 export function browserSync () {
-	if (serverConfig.browserSync.liveReload) {
-		watch(serverConfig.browserSync.watchFiles)
-			.on("change", () => {
-					$browserSync.reload();
-			});
-	}
+  // liveReload
+  if(serverConfig.watchFiles.length){
+    watch(serverConfig.watchFiles)
+      .on("change", () => {
+          $browserSync.reload();
+      });
+  }
 
-	if (serverConfig.browserSync.apiServer){
-		serverConfig.browserSync.options.middleware = serverConfig.browserSync.options.middleware || [];
+  // middleware
+	if (serverConfig.middlewareOptions){
+    serverConfig.browserSync.middleware.push(
+  		proxyMiddleware(serverConfig.browserSync.apiServer.context, serverConfig.browserSync.apiServer.options)
+    );
+  }
 
-		proxyMiddleware(serverConfig.browserSync.apiServer.context, serverConfig.browserSync.apiServer.options);
-	}
-
-	return $browserSync.init(serverConfig.browserSync.options);
+  return $browserSync(serverConfig.browserSync.options);
 }
 
 
 export function server () {
-	if (serverConfig.connectPhp.isUse) {
-		return $connectPhp.server(serverConfig.connectPhp.options, () => {
-			if (serverConfig.browserSync.isUse) {
-				browserSync();
-			}
-		});
-
-	} else if (serverConfig.browserSync.isUse) {
-		return browserSync();
-	}
+  if (serverConfig.connectPhp.isUse) {
+    return $connectPhp.server(serverConfig.connectPhp.options, () => {
+      browserSync();
+    });
+  } else {
+    return browserSync();
+  }
 }

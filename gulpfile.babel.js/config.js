@@ -6,11 +6,9 @@ import _ from "lodash";
 import path from "path";
 import minimist from "minimist";
 
-console.log("===============================");
+
 const options = minimist(process.argv.slice(2));
 const mode = options.mode || "dev";
-
-console.log("===============================");
 
 let config = {
 	isDev: mode == "dev",
@@ -31,13 +29,11 @@ if(options.dist){
 // 		path: ".",
 // 		ogurl: "http://1-10.dev"
 // 	},
-
 // 	stg: {
 // 		title: "ステージング版",
 // 		path: "http://1-10.stg",
 // 		ogurl: "http://1-10.stg"
 // 	},
-
 // 	prd: {
 // 		title: "製品版",
 // 		path: "http://1-10.prd",
@@ -46,7 +42,7 @@ if(options.dist){
 // }
 
 
-// webpack: webpackでのjsコンパイル
+// webpack
 import webpack from "webpack";
 import ConcatPlugin from "webpack-concat-plugin";
 import TerserPlugin from "terser-webpack-plugin";
@@ -75,23 +71,29 @@ config.webpack = {
 						loader: "babel-loader",
 						options: {
 							presets: [
-								["@babel/preset-env", {}]
+								["@babel/preset-env"]
 							]
 						}
 					}],
 					exclude: /node_modules/,
-				}
+				},
+        // {
+        //   test: /\.js$/,
+        //   loader: "string-replace-loader",
+        //   options: {
+        //     search: '\$/api/',
+        //     replace: 'https://',
+        //   }
+        // }
 			]
 		},
 		devtool: "source-map",
-
     resolve: {
   		extensions: [".js"],
       alias: {
-        "@js": path.resolve("./",  `${config.src}assets/js/`)
+        "@js": path.resolve(__dirname, `../${config.src}assets/js/`)
       }
     },
-
 		plugins: [
 			new ConcatPlugin({
 				uglify: false,
@@ -133,7 +135,7 @@ config.webpack = {
 }
 
 
-// sass: sassコンパイル
+// sass
 config.sass = {
 	src: `${config.src}assets/sass/**/*.scss`,
 	dest: `${config.dest}assets/css/`,
@@ -144,7 +146,7 @@ config.sass = {
 }
 
 
-// clean: ファイル削除
+// clean
 config.clean = {
 	files: [
 		`${config.dest}assets/js/**/*.map`
@@ -152,26 +154,24 @@ config.clean = {
 }
 
 
-// server: ローカルサーバー
+// server
 config.server = {
-	browserSync: {
-		isUse: true, // browserSync 有無
-		liveReload: true,
-		watchFiles: [
-			`${config.dest}**/*.html`,
-			`${config.dest}**/*.php`,
-			`${config.dest}assets/css/**/*.css`
-		],
-		// pro
-		// apiServer: {
-		// 	context: "/api",
-		// 	options: {
-		// 		target: "http://www.example.org"
-		// 	}
-		// }
-	},
+  watchFiles: [
+    `${config.dest}**/*.html`,
+    `${config.dest}**/*.php`,
+    `${config.dest}assets/css/**/*.css`
+  ],
+  // middlewareOptions: {
+  //   context: "@api/",
+  //   options: {
+  //     target: "http://www.example.org"
+  //   }
+  // },
 	connectPhp: {
 		isUse: false, // connectPhp 有無
+    options: {
+      base: config.dest
+    }
 	}
 }
 
