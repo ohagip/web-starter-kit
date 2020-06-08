@@ -99,6 +99,7 @@ Browser: Safari [最新版]
 ```
 
 #### タブレット
+アプリ内ブラウザ(WebView)は、非対応。
 #### Android
 ```
 os: Android 6以降
