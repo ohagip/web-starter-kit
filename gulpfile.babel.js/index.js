@@ -56,6 +56,6 @@ export const srv = parallel(server);
 
 /**
  * ejs: ejs
- * command: npm run ejs or gulp srv
+ * command: npm run ejs or gulp ejs
  */
 // export const ejs = parallel(watchEjs);

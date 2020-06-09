@@ -10,6 +10,7 @@
     "srv": "gulp srv",
     "webpack": "gulp webpack --mode prd",
     "sass": "gulp sass --mode prd",
+    "ejs": "gulp ejs --mode prd",
     "dist": "gulp dist --mode prd --dist dist"
   },
   "browserslist": [
