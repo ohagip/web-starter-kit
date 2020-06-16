@@ -71,7 +71,10 @@ config.webpack = {
 						loader: "babel-loader",
 						options: {
 							presets: [
-								["@babel/preset-env"]
+								["@babel/preset-env", {
+                  useBuiltIns: "usage", // or "entry"
+                  corejs: 3,
+                }]
 							]
 						}
 					}],

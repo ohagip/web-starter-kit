@@ -9,3 +9,6 @@
 - tasksに<a href="https://github.com/1-10/web-starter-kit/blob/v2020/gulpfile.babel.js/tasks/ejs.js">ejs追加</a>（タスク登録は案件単位で設定）
 - build時のAPIの書き換え処理のオプション追加（dev, stg, prd等環境に合わせたAPIのURLに書き換え等）
 - distコマンド追加 distフォルダにファイル生成オプション追加
+- HTMLからmeta keywords削除
+- gulp-sassからgulp-dart-sassに変更
+

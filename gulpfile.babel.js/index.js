@@ -4,7 +4,8 @@
  */
 import { parallel, series } from "gulp";
 import { clean } from "./tasks/clean";
-import { watchSass, buildSass } from "./tasks/sass";
+// import { watchSass, buildSass } from "./tasks/sass";
+import { watchSass, buildSass } from "./tasks/dartSass";
 import { watchWebpack, buildWebpack } from "./tasks/webpack";
 import { watchEjs, buildEjs } from "./tasks/ejs";
 import { server } from "./tasks/server";
