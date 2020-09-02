@@ -60,8 +60,8 @@ export function browserSync () {
 
   // middleware
 	if (serverConfig.middlewareOptions){
-    serverConfig.browserSync.middleware.push(
-  		proxyMiddleware(serverConfig.browserSync.apiServer.context, serverConfig.browserSync.apiServer.options)
+    serverConfig.browserSync.options.middleware.push(
+  		proxyMiddleware(serverConfig.middlewareOptions.context, serverConfig.middlewareOptions.options)
     );
   }
 

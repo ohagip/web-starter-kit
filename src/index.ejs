@@ -1,0 +1,30 @@
+<%- include(`${SRC}_config`) _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'top';
+
+page.title = '';
+page.description = '';
+page.keywords = '';
+
+page.ogpUrl = '';
+page.ogpTitle = '';
+page.ogpDescription = '';
+page.ogpImage = '';
+page.ogpSiteName = '';
+page.ogpType = '';
+page.ogpLocale = '';
+page.ogpAppID = '';
+
+page.bodyClass = [];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include(`${SRC}_parts/_head`); %>
+
+<p style="text-align: center">トップ</p>
+<p style="text-align: center"><%- ENV %></p>
+
+<%- include(`${SRC}_parts/_foot`); %>

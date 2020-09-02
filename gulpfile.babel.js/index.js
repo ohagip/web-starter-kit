@@ -15,19 +15,20 @@ import { server } from "./tasks/server";
  * development mode
  * command: npm run dev or gulp
  */
-export default parallel(server, watchSass, watchWebpack);
+// export default parallel(server, watchSass, watchWebpack);
+export default series(clean, parallel(buildSass, buildWebpack, buildEjs), parallel(server, watchSass, watchWebpack, watchEjs));
 
 /**
  * staging mode
  * command: npm run stg or gulp stg
  */
-export const stg = series(clean, parallel(server, buildSass, buildWebpack));
+export const stg = series(clean, parallel(buildSass, buildWebpack, buildEjs));
 
 /**
  * production mode
  * command: npm run prd or gulp prd
  */
-export const prd = series(clean, parallel(buildSass, buildWebpack));
+export const prd = series(clean, parallel(buildSass, buildWebpack, buildEjs));
 
 /**
  * webpack: webpackコンパイル

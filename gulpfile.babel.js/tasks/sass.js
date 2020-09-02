@@ -9,6 +9,7 @@ import $plumber from "gulp-plumber";
 import $sass from "gulp-sass";
 import $postcss from "gulp-postcss";
 import $autoprefixer from "autoprefixer";
+import cssMqpacker from 'css-mqpacker';
 
 
 let sassConfig = _.merge({
@@ -17,7 +18,8 @@ let sassConfig = _.merge({
 	sass: {
 		outputStyle: "expanded"
 	},
-	autoprefixer: {}
+	autoprefixer: {},
+  cssMqpacker: {},
 }, config.sass);
 
 
@@ -30,7 +32,8 @@ export function buildSass() {
     .pipe($plumber())
     .pipe($sass(sassConfig.sass).on("error", $sass.logError))
     .pipe($postcss([
-      $autoprefixer(sassConfig.autoprefixer)
+      $autoprefixer(sassConfig.autoprefixer),
+      cssMqpacker(sassConfig.cssMqpacker),
     ]))
     .pipe(dest(sassConfig.dest));
 }

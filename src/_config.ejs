@@ -1,0 +1,29 @@
+<%_
+// gulpからデータを受け取る
+// エディタ都合で変数が未宣言になるため記載している
+SRC           = SRC;
+ENV           = ENV;
+CONFIG        = CONFIG;
+
+FILE_PATH     = CONFIG.path;
+ASSETS_PATH   = CONFIG.path + 'assets/';
+IMAGES_PATH   = ASSETS_PATH + 'images/';
+CSS_PATH      = ASSETS_PATH + 'css/';
+JS_PATH       = ASSETS_PATH + 'js/';
+DUMMY_PATH    = CONFIG.path + 'dummy/';
+
+// 全ページ共通
+site = {};
+site.title = 'title';
+site.description = 'description';
+site.keywords = 'keywords';
+
+site.ogpUrl = CONFIG.url;
+site.ogpTitle = 'title';
+site.ogpDescription = 'description';
+site.ogpImage = `${CONFIG.url}${CONFIG.path}assets/images/common/ogp.png`;
+site.ogpSiteName = 'sate name';
+site.ogpType = 'article'; // website
+site.ogpLocale = 'ja_JP';
+site.ogpAppID = '';
+_%>

@@ -24,3 +24,9 @@ ehthumbs.db
 
 # Editor
 .vscode
+.idea
+
+/htdocs/*
+!/htdocs/assets
+/htdocs/assets/*
+!/htdocs/assets/images

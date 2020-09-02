@@ -1,0 +1,9 @@
+@use "../../_common/mixin" as *;
+
+/**
+ * Clearfix
+ */
+
+.u-clearfix {
+  @include clearfix;
+}

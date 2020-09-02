@@ -40,7 +40,7 @@ export function buildEjs() {
 
 	return src(_src.concat(_exc))
 		.pipe($plumber())
-		.pipe($ejs({data: ejsConfig.ejs.data}, ejsConfig.ejs.options))
+		.pipe($ejs(ejsConfig.ejs.data, ejsConfig.ejs.options))
 		.pipe($rename(ejsConfig.rename))
 		.pipe(dest(ejsConfig.dest));
 }

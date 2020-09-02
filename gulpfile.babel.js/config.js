@@ -41,12 +41,36 @@ if(options.dist){
 // 	}
 // }
 
+config.data = {
+  dev: {
+    path: "/",
+    url: "http://1-10.dev"
+  },
+
+  stg: {
+    path: "/",
+    url: "http://1-10.stg"
+  },
+
+  prd: {
+    path: "/",
+    url: "http://1-10.prd"
+  }
+}
+
 
 // webpack
 import webpack from "webpack";
 import ConcatPlugin from "webpack-concat-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 // import HtmlWebpackPlugin from "html-webpack-plugin";
+import { DefinePlugin } from "webpack";
+
+import createEntries from "./tasks/createEntries";
+const entries = createEntries(`**/!(_)*.js`, {
+  cwd: "./src/assets/js/entries/"
+});
+entries["common.js"] = `${config.src}assets/js/common/index.js`;
 
 config.webpack = {
 	src: [
@@ -56,10 +80,10 @@ config.webpack = {
 	dest: `${config.dest}assets/js/`,
 	config: {
 		mode: config.isDev ? "development" : "production",
-		// entry: entries, // entryポイントが複数の場合
-		entry: {
-			"common.js": `${config.src}assets/js/common/index.js`
-		} ,
+		entry: entries, // entryポイントが複数の場合
+		// entry: {
+		// 	"common.js": `${config.src}assets/js/common/index.js`
+		// } ,
 		output: {
 			filename: "[name]"
 		},
@@ -117,6 +141,12 @@ config.webpack = {
       new webpack.ProvidePlugin({
         Promise: "es6-promise",
       }),
+
+      new DefinePlugin({
+        APP_CONFIG: JSON.stringify(config.data[config.mode]),
+        APP_ENV: JSON.stringify(config.mode),
+      }),
+
 			// og, pathなどの書き換えが必要な場合
 			// new HtmlWebpackPlugin(
 			// 	_.merge({
@@ -145,14 +175,19 @@ config.sass = {
 	sass: {
 		outputStyle: config.isDev ? "expanded" : "compressed"
 	},
-	autoprefixer: {}
+	autoprefixer: {},
+  cssMqpacker: {},
 }
 
 
 // clean
 config.clean = {
 	files: [
-		`${config.dest}assets/js/**/*.map`
+		// `${config.dest}assets/js/**/*.map`
+    `${config.dest}assets/js/**/*`,
+    `${config.dest}assets/css/**/*`,
+    `${config.dest}**/*.html`,
+    `${config.dest}**/*.ejs`,
 	]
 }
 
@@ -162,12 +197,26 @@ config.server = {
   watchFiles: [
     `${config.dest}**/*.html`,
     `${config.dest}**/*.php`,
-    `${config.dest}assets/css/**/*.css`
+    `${config.dest}assets/css/**/*.css`,
+    `${config.dest}assets/js/**/*.js`,
   ],
+  options: {
+    serveStatic: [
+      {
+        route: `${config.data[config.mode].path}dummy`,
+        dir: `${config.src}mock/assets/`,
+      },
+    ],
+    ghostMode: false,
+    reloadDebounce: 500,
+  },
   // middlewareOptions: {
-  //   context: "@api/",
+  //   context: "/api",
   //   options: {
-  //     target: "http://www.example.org"
+  //     target: "http://www.example.org",
+  //     auth: 'user:pass',
+  //     changeOrigin: true,
+  //     logLevel: 'debug',
   //   }
   // },
 	connectPhp: {
@@ -185,9 +234,9 @@ config.ejs = {
 	exclude: `!${config.src}**/_*.ejs`,
 	ejs: {
 		data: {
-      head: {
-        title: "Site Title"
-      }
+      SRC: path.join(process.env.PWD, config.src),
+      ENV: config.mode,
+      CONFIG: config.data[config.mode],
 		}
 	}
 }
