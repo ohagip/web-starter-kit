@@ -161,6 +161,7 @@ config.webpack = {
       minimizer: [
         new TerserPlugin({
           extractComments: false,
+          sourceMap: config.isDev,
         })
       ],
 		}
